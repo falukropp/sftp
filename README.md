@@ -3,7 +3,10 @@
 
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
-Only modification in this image is that, it changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
+This image changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
+
+# Additions
+![rsyslog logo](https://avatars2.githubusercontent.com/u/8534216?s=200&v=4" Powered by mysecureshell")
 
 # Securely share your files
 
