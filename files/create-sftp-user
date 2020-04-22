@@ -100,9 +100,15 @@ if [ -n "$dir" ]; then
             mkdir -p "$dirPath"
             chown -R "$uid:users" "$dirPath"
         else
-            log "The current user is $uid"
             chown -R "$uid:users" "$dirPath"
+            # echo "The current user is $uid"
+            log "The current user is $uid"
             log "Directory already exists: $dirPath"
         fi
     done
 fi
+
+# create additional rsyslog sockets for the sftp chrooted users
+mkdir -m2755 "/home/$user/dev"
+log "Created dev directory for User $user"
+echo "input(type=\"imuxsock\" Socket=\"/home/$user/dev/log\" CreatePath=\"on\")" >> /etc/rsyslog.d/sftplog.conf
