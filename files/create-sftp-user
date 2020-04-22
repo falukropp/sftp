@@ -103,7 +103,8 @@ if [ -n "$dir" ]; then
             chown -R "$uid:users" "$dirPath"
         else
             log "The current user is $uid"
-            chown -R "$uid:users" "$dirPath"
+            log "The directory path is $dirPath"
+            chown -R "$uid:$gid" "$dirPath"
             log "Directory already exists: $dirPath"
         fi
     done
