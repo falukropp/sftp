@@ -1,5 +1,6 @@
 FROM alpine:latest
-MAINTAINER Adrian Dvergsdal [atmoz.net]
+LABEL MAINTAINER="SATYADEEP G" \
+      "GitHub Link"="https://github.com/satyadeep"
 
 # Steps done in one RUN layer:
 # - Install packages
