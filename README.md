@@ -3,7 +3,15 @@
 
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
-Only modification in this image is that, it changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
+This image changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
+
+# Additions
+![rsyslog logo](https://avatars3.githubusercontent.com/u/6178456?s=200&v=4 "Powere by rsyslog")
+
+Added support for logging the SFTP actions of all users using rsyslog. The log will be added to the container logs which can be checked using
+```
+docker container logs container-name
+```
 
 # Securely share your files
 
