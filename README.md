@@ -1,5 +1,5 @@
 # SFTP
-![OpenSSH logo](https://raw.githubusercontent.com/satyadeep/sftp/master/openssh.png "Powered by OpenSSH")
+![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png "Powered by OpenSSH")
 
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
