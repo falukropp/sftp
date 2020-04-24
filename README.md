@@ -1,22 +1,33 @@
 # SFTP
-<img align="left" width="200" height="200" src="https://github.com/satyadeep/sftp/blob/alpine/openssh.png">
+| ![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png?raw=true "Powered by OpenSSH") |  ![rsyslog logo](https://avatars3.githubusercontent.com/u/6178456?s=200&v=4 "Powered by rsyslog") |
+|---|---|
+
+**Note:** Please use the branches as per your requirements
+
+>***mss-logging***  :   Use this branch if you require the additional configuration options of mysecureshell as well as access logs using rsyslog.   
+>
+>***alpine***                             :            Use this branch if you just need the SFTP functionality powered by OpenSSH.
+>
+>***logging***                           :            Use this branch if you need all access logs of users and directories along with SFTP functionality.**<-------- You are now looking at this branch**
+>
+>***mysecureshell***              :            Use this branch of you need the additional configuration provided by mysecureshell but don't need the access logs.
+
+---
 
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
 This image changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
 
-# Additions
-<img align="left" width="200" height="200" src="https://avatars3.githubusercontent.com/u/6178456">
-
-Added support for logging the SFTP actions of all users using rsyslog. The log will be added to the container logs which can be checked using
-```
-docker container logs container-name
-```
+This image also uses rsyslog for logging the access events of SFTP like, user login and logout as well as other events like directory creation, deletion etc.
 
 # Securely share your files
 
 Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol)) server with [OpenSSH](https://en.wikipedia.org/wiki/OpenSSH).
-This is a build linked with the [alpine](https://hub.docker.com/_/alpine/) repositories.
+
+# Rsyslog for event logging
+Rsyslog is a **r**ocket-fast **sys**tem for **log** processing.
+
+It offers high-performance, great security features and a modular design. While it started as a regular syslogd, rsyslog has evolved into a kind of swiss army knife of logging, being able to accept inputs from a wide variety of sources, transform them, and output to the results to diverse destinations.
 
 # Usage
 
@@ -156,6 +167,11 @@ ssh-keygen -t ed25519 -f ssh_host_ed25519_key < /dev/null
 ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key < /dev/null
 ```
 
+## See user access logs
+All the user logs (User login/logout and directory/file operations like creation/deletion/renaming of files) will be added to the container logs and can be checked using
+
+```docker container logs sftp-container-name```
+
 ## Execute custom scripts or applications
 
 Put your programs in `/etc/sftp.d/` and it will automatically run when the container starts.
@@ -187,6 +203,7 @@ bindmount /data/docs /home/peter/docs --read-only
 ```
 
 **NOTE:** Using `mount` requires that your container runs with the `CAP_SYS_ADMIN` capability turned on. [See this answer for more information](https://github.com/atmoz/sftp/issues/60#issuecomment-332909232).
+
 
 # What version of OpenSSH do I get?
 
