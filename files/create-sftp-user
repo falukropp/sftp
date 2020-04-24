@@ -100,10 +100,9 @@ if [ -n "$dir" ]; then
             log "The current user is $uid"
             log "Creating directory: $dirPath"
             mkdir -p "$dirPath"
-            chown -R "$uid:users" "$dirPath"
+            chown -R "$uid:$gid" "$dirPath"
         else
             log "The current user is $uid"
-            log "The directory path is $dirPath"
             chown -R "$uid:$gid" "$dirPath"
             log "Directory already exists: $dirPath"
         fi
