@@ -4,7 +4,7 @@
 
 **Note:** Please use the branches as per your requirements
 
->***mss-logging***  :   Use this branch if you require the additional configuration options of mysecureshell as well as access logs using rsyslog.   **<-------- This is the current branch**
+>***mss-logging***  :   Use this branch if you require the additional configuration options of mysecureshell as well as access logs using rsyslog.   **<-------- You are now looking at this branch**
 >
 >***alpine***                             :            Use this branch if you just need the SFTP functionality powered by OpenSSH.
 >
