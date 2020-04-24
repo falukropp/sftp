@@ -1,14 +1,28 @@
 # SFTP
-![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png "Powered by OpenSSH")
+| ![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png?raw=true "Powered by OpenSSH") |
+|---|
+
+**Note:** Please use the branches as per your requirements
+
+>***mss-logging***  :   Use this branch if you require the additional configuration options of mysecureshell as well as access logs using rsyslog. 
+>
+>***alpine***                             :            Use this branch if you just need the SFTP functionality powered by OpenSSH.  **<-------- You are now looking at this branch**
+>
+>***logging***                           :            Use this branch if you need all access logs of users and directories along with SFTP functionality.
+>
+>***mysecureshell***              :            Use this branch of you need the additional configuration provided by mysecureshell but don't need the access logs.
+
+---
 
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
-Only modification in this image is that, it changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
+This image changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
+
 
 # Securely share your files
 
 Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol)) server with [OpenSSH](https://en.wikipedia.org/wiki/OpenSSH).
-This is a build linked with the [alpine](https://hub.docker.com/_/alpine/) repositories.
+
 
 # Usage
 
@@ -179,6 +193,7 @@ bindmount /data/docs /home/peter/docs --read-only
 ```
 
 **NOTE:** Using `mount` requires that your container runs with the `CAP_SYS_ADMIN` capability turned on. [See this answer for more information](https://github.com/atmoz/sftp/issues/60#issuecomment-332909232).
+
 
 # What version of OpenSSH do I get?
 
