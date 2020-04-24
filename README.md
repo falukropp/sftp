@@ -10,6 +10,10 @@ It also includes MySecureShell which allows more control over the user access an
 
 Another addition to this image is rsyslog for logging the access events of SFTP like, user login and logout as well as other events like directory creation, deletion etc.
 
+# Securely share your files
+
+Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol)) server with [OpenSSH](https://en.wikipedia.org/wiki/OpenSSH).
+
 # MySecureShell for more control
 MySecureShell is a solution which has been made to bring more features to sftp/scp protocol given by OpenSSH. By default, OpenSSH brings a lot of liberty to connected users which imply to trust in your users. The goal of MySecureShell is to offer the power and security of OpenSSH, with enhanced features (like ACL) to restrict connected users.
 
@@ -17,11 +21,6 @@ MySecureShell is a solution which has been made to bring more features to sftp/s
 Rsyslog is a **r**ocket-fast **sys**tem for **log** processing.
 
 It offers high-performance, great security features and a modular design. While it started as a regular syslogd, rsyslog has evolved into a kind of swiss army knife of logging, being able to accept inputs from a wide variety of sources, transform them, and output to the results to diverse destinations.
-
-# Securely share your files
-
-Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol)) server with [OpenSSH](https://en.wikipedia.org/wiki/OpenSSH).
-This is a build linked with the [alpine](https://hub.docker.com/_/alpine/) repositories.
 
 # Usage
 
