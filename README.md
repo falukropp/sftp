@@ -1,17 +1,31 @@
 # SFTP
-![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png "Powered by OpenSSH")
+| ![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png?raw=true "Powered by OpenSSH") | ![mysecureshell logo](https://mysecureshell.readthedocs.io/en/latest/_images/logo_mss_large.png "Powered by mysecureshell")  |
+|---|---|
+
+**Note:** Please use the branches as per your requirements
+
+>***mss-logging***  :   Use this branch if you require the additional configuration options of mysecureshell as well as access logs using rsyslog.   
+>
+>***alpine***                             :            Use this branch if you just need the SFTP functionality powered by OpenSSH.
+>
+>***logging***                           :            Use this branch if you need all access logs of users and directories along with SFTP functionality.
+>
+>***mysecureshell***              :            Use this branch of you need the additional configuration provided by mysecureshell but don't need the access logs.**<-------- You are now looking at this branch**
+
+---
 
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
 This image changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
 
-# Additions
-![rsyslog logo](https://avatars2.githubusercontent.com/u/8534216?s=200&v=4" Powered by mysecureshell")
+It also includes MySecureShell which allows more control over the user access and shared directories through a configuration file.
 
 # Securely share your files
 
 Easy to use SFTP ([SSH File Transfer Protocol](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol)) server with [OpenSSH](https://en.wikipedia.org/wiki/OpenSSH).
-This is a build linked with the [alpine](https://hub.docker.com/_/alpine/) repositories.
+
+# MySecureShell for more control
+MySecureShell is a solution which has been made to bring more features to sftp/scp protocol given by OpenSSH. By default, OpenSSH brings a lot of liberty to connected users which imply to trust in your users. The goal of MySecureShell is to offer the power and security of OpenSSH, with enhanced features (like ACL) to restrict connected users.
 
 # Usage
 
@@ -102,6 +116,72 @@ sftpuserone::::sshuserone
 sftpuserwithpasswordone:$1$LKnsymeQ$iwJOMs4P0/jifynOKyK0E/:e:::passworduserone
 ```
 
+## Example Configuration File for mysecureshell
+
+***Note*** This configuration file is optional and can be used if you'd like to configure various additional rules for the users and directory access, as shown below.
+
+/host/sftp_config:
+
+```
+#Default rules for everybody
+<Default>
+	GlobalDownload			5m	#total speed download for all clients
+							# o -> bytes   k -> kilo bytes   m -> mega bytes
+	GlobalUpload			0	#total speed download for all clients (0 for unlimited)
+	Download 				500k	#limit speed download for each connection
+	Upload 					0	#unlimit speed upload for each connection
+	StayAtHome				true	#limit client to his home
+	VirtualChroot			true	#fake a chroot to the home account
+	LimitConnection			10	#max connection for the server sftp
+	LimitConnectionByUser	1	#max connection for the account
+	LimitConnectionByIP		6	#max connection by ip for the account
+#	LogLevel				5
+	LogSyslog				true
+	Home					/home/$USER	#overwrite home of the user but if you want you can use
+							#	environment variable (ie: Home /home/$USER)
+	IdleTimeOut				5m	#(in second) deconnect client is idle too long time
+	ResolveIP				true	#resolve ip to dns
+	IgnoreHidden			true	#treat all hidden files as if they don't exist
+	DirFakeUser				true	#Hide real file/directory owner (just change displayed permissions)
+	DirFakeGroup			true	#Hide real file/directory group (just change displayed permissions)
+#	DirFakeMode				0400	#Hide real file/directory rights (just change displayed permissions)
+							#Add execution right for directory if read right is set
+	HideNoAccess			true	#Hide file/directory which user has no access
+#	MaxOpenFilesForUser		20	#limit user to open x files on same time
+#	MaxWriteFilesForUser	10	#limit user to x upload on same time
+#	MaxReadFilesForUser		10	#limit user to x download on same time
+	DefaultRights			0640 0775	#Set default rights for new file and new directory
+#	MinimumRights			0400 0700	#Set minimum rights for files and dirs
+
+	ShowLinksAsLinks		false	#show links as their destinations
+#	ConnectionMaxLife		1d	#limits connection lifetime to 1 day
+
+#	Charset					"ISO-8859-15"	#set charset of computer
+</Default>
+
+<Group group_1010>      # This will apply to only users of grop 1010
+	CanChangeRights 		true		#able to make changes on files and directories
+	Shell 					/bin/sh
+	LogSyslog				true
+	IsAdmin					true		#can admin the server
+	Home					/home
+	VirtualChroot			true
+	StayAtHome				false
+</Group>
+```
+
+Refer to the [official documentation](https://mysecureshell.readthedocs.io/en/latest/configuration_detailed.html)  for more configuration options.
+
+To use the *mysecureshell* configuration, mount the configuration file to /etc/ssh/sftp_config as shown below.
+```
+docker run \
+    -v /host/sftp_config.conf:/etc/ssh/sftp_config:ro \
+    -v /host/users.conf:/etc/sftp/users.conf:ro \
+    -v /host/keys/key_sftp_one.pub:/home/sftpuserone/.ssh/keys/key_sftp_one.pub
+    -v /host/webroot/sftppassone:/home/sftpuserwithpasswordone/testpassone/sftppassone
+    -p 2222:22 -d satyadeep/sftp
+```
+
 ## Encrypted password
 
 Add `:e` behind password to mark it as encrypted. Use single quotes if using terminal.
@@ -182,6 +262,7 @@ bindmount /data/docs /home/peter/docs --read-only
 ```
 
 **NOTE:** Using `mount` requires that your container runs with the `CAP_SYS_ADMIN` capability turned on. [See this answer for more information](https://github.com/atmoz/sftp/issues/60#issuecomment-332909232).
+
 
 # What version of OpenSSH do I get?
 
