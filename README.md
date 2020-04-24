@@ -2,6 +2,18 @@
 | ![OpenSSH logo](https://github.com/satyadeep/sftp/blob/alpine/openssh.png?raw=true "Powered by OpenSSH") | ![mysecureshell logo](https://mysecureshell.readthedocs.io/en/latest/_images/logo_mss_large.png "Powered by mysecureshell")  |  ![rsyslog logo](https://avatars3.githubusercontent.com/u/6178456?s=200&v=4 "Powered by rsyslog") |
 |---|---|---|
 
+**Note:** Please use the branches as per your requirements
+
+>***mss-logging***  :   Use this branch if you require the additional configuration options of mysecureshell as well as access logs using rsyslog.   **<-------- This is the current branch**
+>
+>***alpine***                             :            Use this branch if you just need the SFTP functionality powered by OpenSSH.
+>
+>***logging***                           :            Use this branch if you need all access logs of users and directories along with SFTP functionality.
+>
+>***mysecureshell***              :            Use this branch of you need the additional configuration provided by mysecureshell but don't need the access logs.
+
+---
+
 Forked from [atmoz/sftp](https://github.com/atmoz/sftp) to support user-owned base directories.
 
 This image changes the ownership of the directories under each user's home directory to be the SFTP user whose home directory they are in. In the atmoz/sftp image, the first created SFTP user (when there are multiple users) is the owner of all the directories under all users' home directories, which makes it unusable when not using a volume.
