@@ -68,9 +68,10 @@ fi
 useradd "${useraddOptions[@]}" "$user"
 mkdir -p "/home/$user"
 chown root:root "/home/$user"
-# chmod 755 "/home/$user"
+chmod 755 "/home/$user"
+
 # Fix user permissions so that the host machine user can read the contents except for .ssh folder
-find "/home/$user" -type d ! -name '.ssh' -exec chmod 755 {} +
+# find "/home/$user" -type d ! -name '.ssh' -exec chmod 755 {} +
 
 # Retrieving user id to use it in chown commands instead of the user name
 # to avoid problems on alpine when the user name contains a '.'
