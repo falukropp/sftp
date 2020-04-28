@@ -108,4 +108,11 @@ if [ -n "$dir" ]; then
             log "Directory already exists: $dirPath"
         fi
     done
+else 
+    log "The current user is $uid"
+    log "Directory not defined in configuration. Finding directories under the user's home directory..."
+    dirPath=$(find "/home/$user/" -type d -maxdepth 1 -mindepth 1 ! -name '.ssh')
+    log "Found the directories $dirPath"
+    log "Making the directories writeable"
+    find "/home/$user/" -type d -maxdepth 1 -mindepth 1 ! -name '.ssh' -exec chown -R "$uid:$gid" {} +
 fi
