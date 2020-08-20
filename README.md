@@ -182,10 +182,10 @@ Refer to the [official documentation](https://mysecureshell.readthedocs.io/en/la
 To use the *mysecureshell* configuration, mount the configuration file to /etc/ssh/sftp_config as shown below.
 ```
 docker run \
-    -v /host/sftp_config.conf:/etc/ssh/sftp_config:ro \
-    -v /host/users.conf:/etc/sftp/users.conf:ro \
-    -v /host/keys/key_sftp_one.pub:/home/sftpuserone/.ssh/keys/key_sftp_one.pub
-    -v /host/webroot/sftppassone:/home/sftpuserwithpasswordone/testpassone/sftppassone
+    -v <host-dir>/sftp_config.conf:/etc/ssh/sftp_config:ro \
+    -v <host-dir>/users.conf:/etc/sftp/users.conf:ro \
+    -v <host-dir>/keys/key_sftp_one.pub:/home/sftpuserone/.ssh/keys/key_sftp_one.pub
+    -v <host-dir>/webroot/sftppassone:/home/sftpuserwithpasswordone/testpassone/sftppassone
     -p 2222:22 -d satyadeep/sftp
 ```
 
@@ -195,7 +195,7 @@ Add `:e` behind password to mark it as encrypted. Use single quotes if using ter
 
 ```
 docker run \
-    -v /host/share:/home/foo/share \
+    -v <host-dir>/share:/home/foo/share \
     -p 2222:22 -d satyadeep/sftp \
     'foo:$1$0G2g0GSt$ewU0t6GXG15.0hWoOX8X9.:e:1001'
 ```
@@ -209,9 +209,9 @@ Mount public keys in the user's `.ssh/keys/` directory. All keys are automatical
 
 ```
 docker run \
-    -v /host/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro \
-    -v /host/id_other.pub:/home/foo/.ssh/keys/id_other.pub:ro \
-    -v /host/share:/home/foo/share \
+    -v <host-dir>/id_rsa.pub:/home/foo/.ssh/keys/id_rsa.pub:ro \
+    -v <host-dir>/id_other.pub:/home/foo/.ssh/keys/id_other.pub:ro \
+    -v <host-dir>/share:/home/foo/share \
     -p 2222:22 -d satyadeep/sftp \
     foo::1001
 ```
@@ -224,9 +224,9 @@ This container will generate new SSH host keys at first run. To avoid that your 
 
 ```
 docker run \
-    -v /host/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key \
-    -v /host/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key \
-    -v /host/share:/home/foo/share \
+    -v <host-dir>/ssh_host_ed25519_key:/etc/ssh/ssh_host_ed25519_key \
+    -v <host-dir>/ssh_host_rsa_key:/etc/ssh/ssh_host_rsa_key \
+    -v <host-dir>/share:/home/foo/share \
     -p 2222:22 -d satyadeep/sftp \
     foo::1001
 ```
